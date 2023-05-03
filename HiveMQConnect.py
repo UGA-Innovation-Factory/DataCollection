@@ -1,6 +1,6 @@
 # Class in this file is used to create a new connection to the
 # HiveMQ server and publish into it
-from typing import Callable
+from typing import Callable, Union, Any
 import time
 import paho.mqtt.client as paho
 from paho import mqtt
@@ -43,3 +43,19 @@ class HiveClient:
 
     def publish(self, topic : str, payload, qos = 0) -> None:
         self.client.publish(topic, payload, qos)
+
+    def subscribe(self, topic : str, qos : int = 0, callback : Union[Callable[[str], Any], None] = None):
+        self.client.subscribe(topic, qos)
+        if callback:
+            self.client.message_callback_add(topic, callback)
+
+    def set_topic_callback(self, topic : str, callback : Callable[[str], Any]):
+        self.client.message_callback_add(topic, callback)
+    
+    def remove_topic_callback(self, topic : str):
+        self.client.message_callback_remove(topic)
+
+    def set_all_subscribed_topics_callback(self, callback):
+        """calback(client, userdata, msg)"""
+        self.client.on_message = callback
+
