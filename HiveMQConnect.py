@@ -21,39 +21,56 @@ class HiveClient:
         self.host = host
         self.port = port
 
+
     def connect(self) -> None:
         self.client.connect(self.host, self.port)
 
+
     def loop_start(self) -> None:
         self.client.loop_start()
+
 
     def connect_and_loop_start(self) -> None:
         self.connect()
         self.loop_start()
 
+
     def loop_stop(self) -> None:
         self.client.loop_stop()
+
 
     def disconnect(self) -> None:
         self.client.disconnect()
 
+
     def loop_stop_and_disconnect(self) -> None:
         self.loop_stop()
         self.disconnect()
+        print("Disconnected from HiveMQ.")
+
 
     def publish(self, topic : str, payload, qos = 0) -> None:
         self.client.publish(topic, payload, qos)
+
+
+    def publish_dict(self, base_topic : str, payload_dict : dict, qos = 0) -> None:
+        for key, value in payload_dict.items():
+            self.publish(base_topic + "/" + key, value, qos)
+
 
     def subscribe(self, topic : str, qos : int = 0, callback : Union[Callable[[str], Any], None] = None):
         self.client.subscribe(topic, qos)
         if callback:
             self.client.message_callback_add(topic, callback)
 
+
     def set_topic_callback(self, topic : str, callback : Callable[[str], Any]):
         self.client.message_callback_add(topic, callback)
     
+
     def remove_topic_callback(self, topic : str):
         self.client.message_callback_remove(topic)
+
 
     def set_all_subscribed_topics_callback(self, callback):
         """calback(client, userdata, msg)"""
