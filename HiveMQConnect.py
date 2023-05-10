@@ -55,7 +55,15 @@ class HiveClient:
 
     def publish_dict(self, base_topic : str, payload_dict : dict, qos = 0) -> None:
         for key, value in payload_dict.items():
-            self.publish(base_topic + "/" + key, value, qos)
+            try:
+                self.publish(base_topic + "/" + key, value, qos)
+            except TypeError as e:
+                if type(value) == dict:
+                    self.publish_dict(base_topic + "/" + key, value, qos)
+                if type(value) == list:
+                    self.publish_dict(base_topic + "/" + key, {str(i): val for i, val in enumerate(value)}, qos)
+                else:
+                    raise e
 
 
     def subscribe(self, topic : str, qos : int = 0, callback : Union[Callable[[str], Any], None] = None):
