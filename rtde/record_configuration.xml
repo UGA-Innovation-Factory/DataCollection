@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<!--For field documentation: 
+https://www.universal-robots.com/articles/ur/interface-communication/real-time-data-exchange-rtde-guide/#:~:text=3.3-,ROBOT%20CONTROLLER%20OUTPUTS,-Name
+-->
 <rtde_config>
 	<recipe key="out">
 		<field name="timestamp" type="DOUBLE"/>
