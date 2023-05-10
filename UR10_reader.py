@@ -10,8 +10,9 @@ def fakeDataGen():
                 if not text:
                     break
                 yield " " + text
-iterator = None
 
+
+#iterator = None
 # def begin_connection():
 #     socket_inst = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #     host = "172.22.114.160"            # Ip addres of the robot
@@ -39,7 +40,8 @@ if __name__ == '__main__':
 
     UR10_ip = "172.22.114.160"
     frecuency = 10
-    ur10_connection = UR10Listener(host=UR10_ip, frequency=frecuency)
+    config_file = "rtde/record_configuration.xml"
+    ur10_connection = UR10Listener(host=UR10_ip, frequency=frecuency, config_file=config_file)
     ur10_connection.connect()
 
     time_out = 1/frecuency
