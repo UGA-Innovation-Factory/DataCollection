@@ -37,6 +37,7 @@ def fakeDataGen():
 
 if __name__ == '__main__':
     #getter, time_out = begin_connection()
+    print("Starting up...")
 
     UR10_ip = "172.22.114.160"
     frecuency = 10
@@ -49,6 +50,7 @@ if __name__ == '__main__':
     hqt_client = HiveClient()
     hqt_client.connect_and_loop_start()
 
+    print("Running...")
     try:
         while True:
             time.sleep(time_out)
