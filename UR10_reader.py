@@ -4,15 +4,6 @@ from HiveMQConnect import HiveClient
 from rtde.rtde_ur10_connection import UR10Listener
 #rtde from: https://github.com/UniversalRobots/RTDE_Python_Client_Library
 
-# def fakeDataGen():
-#     while True:
-#         with open("UR10Output.txt", "r") as file:
-#             while True:
-#                 text = file.readline()
-#                 if not text:
-#                    break
-#                yield " " + text
-
 
 if __name__ == '__main__':
     print("Starting up...")
@@ -32,15 +23,14 @@ if __name__ == '__main__':
     try:
         while True:
             time.sleep(time_out)
-            message_dict = ur10_connection.read_dict()
-            #print(message_dict)
-            hqt_client.publish("DT/UR10", json.dumps(message_dict))
+            message = json.dumps(ur10_connection.read_dict())
+            #print(message)
+            hqt_client.publish("DT/UR10", message)
     except KeyboardInterrupt:
         print("Stopping...")
         hqt_client.loop_stop_and_disconnect()
         ur10_connection.disconnect()
-        sys.exit(0)
-    
+        
     
 
 

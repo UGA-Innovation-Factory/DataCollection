@@ -13,19 +13,23 @@ def fakeDataGen():
 
 
 if __name__ == '__main__':
+    print("Starting up...")
 
     iterator = fakeDataGen()
     getter = (lambda : next(iterator))
-    time_out = 0.05
+
+    time_out = 0.02
 
     hqt_client = HiveClient()
     hqt_client.connect_and_loop_start()
+
+    print("Running...")
     try:
         while True:
             time.sleep(time_out)
-            message = str(getter())[:-1]
+            message = getter()
             print(message)
-            hqt_client.publish("DT/UR10", message)
+            hqt_client.publish("fake/UR10", message)
     except KeyboardInterrupt:
         print("Stopping...")
         hqt_client.loop_stop_and_disconnect()
