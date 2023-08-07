@@ -1,7 +1,7 @@
 import time, sys, json
 from HiveMQConnect import HiveClient
 
-from rtde.rtde_ur10_connection import UR10Listener
+from rtde.UR10RTDE import UR10RTDE
 #rtde from: https://github.com/UniversalRobots/RTDE_Python_Client_Library
 
 
@@ -11,7 +11,7 @@ if __name__ == '__main__':
     UR10_ip = "172.22.114.160"
     frecuency = 10
     config_file = "rtde/record_configuration.xml"
-    ur10_connection = UR10Listener(host=UR10_ip, frequency=frecuency, config_file=config_file)
+    ur10_connection = UR10RTDE(host=UR10_ip, frequency=frecuency, config_file=config_file)
     ur10_connection.connect()
 
     time_out = 1/frecuency

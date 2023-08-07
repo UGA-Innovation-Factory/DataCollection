@@ -1,3 +1,4 @@
+# Code used to publish fake data to HiveMQ MQTT broker
 from HiveMQConnect import HiveClient
 import time
 
@@ -29,7 +30,7 @@ if __name__ == '__main__':
             time.sleep(time_out)
             message = getter()
             print(message)
-            hqt_client.publish("fake/UR10", message)
+            hqt_client.publish("DT/UR10", message)
     except KeyboardInterrupt:
         print("Stopping...")
         hqt_client.loop_stop_and_disconnect()
