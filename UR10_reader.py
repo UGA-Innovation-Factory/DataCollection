@@ -6,30 +6,38 @@ from rtde.UR10RTDE import UR10RTDE
 
 
 if __name__ == '__main__':
-    print("Starting up...")
+    while True:
+        try:
+            print("Starting up...")
 
-    UR10_ip = "172.22.114.160"
-    frecuency = 10
-    config_file = "rtde/record_configuration.xml"
-    ur10_connection = UR10RTDE(host=UR10_ip, frequency=frecuency, config_file=config_file)
-    ur10_connection.connect()
+            UR10_ip = "172.22.114.160"
+            frecuency = 25
+            config_file = "rtde/record_configuration.xml"
+            ur10_connection = UR10RTDE(host=UR10_ip, frequency=frecuency, config_file=config_file)
+            ur10_connection.connect()
 
-    time_out = 1/frecuency
+            time_out = 1/frecuency
 
-    hqt_client = HiveClient()
-    hqt_client.connect_and_loop_start()
+            hqt_client = HiveClient()
+            hqt_client.connect_and_loop_start()
 
-    print("Running...")
-    try:
-        while True:
-            time.sleep(time_out)
-            message = json.dumps(ur10_connection.read_dict())
-            #print(message)
-            hqt_client.publish("DT/UR10", message)
-    except KeyboardInterrupt:
-        print("Stopping...")
-        hqt_client.loop_stop_and_disconnect()
-        ur10_connection.disconnect()
+            print("Running...")
+            try:
+                while True:
+                    time.sleep(time_out)
+                    message = json.dumps(ur10_connection.read_dict())
+                    #print(message)
+                    hqt_client.publish("DT/UR10", message)
+            except KeyboardInterrupt:
+                print("Stopping...")
+                hqt_client.loop_stop_and_disconnect()
+                ur10_connection.disconnect()
+                sys.exit()
+        
+        except Exception as e:
+            print(e)
+            print("Trying again in 3 seconds...")
+            time.sleep(3)
         
     
 
