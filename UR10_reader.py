@@ -11,7 +11,7 @@ if __name__ == '__main__':
             print("Starting up...")
 
             UR10_ip = "172.22.114.160"
-            frecuency = 25
+            frecuency = 50
             config_file = "rtde/record_configuration.xml"
             ur10_connection = UR10RTDE(host=UR10_ip, frequency=frecuency, config_file=config_file)
             ur10_connection.connect()
