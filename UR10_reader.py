@@ -1,4 +1,4 @@
-import time, sys, json
+import time, sys, json, os
 from HiveMQConnect import HiveClient
 
 from rtde.UR10RTDE import UR10RTDE
@@ -6,13 +6,14 @@ from rtde.UR10RTDE import UR10RTDE
 
 
 if __name__ == '__main__':
+    dirpath = os.path.dirname(os.path.realpath(__file__))
     while True:
         try:
             print("Starting up...")
 
             UR10_ip = "172.22.114.160"
             frecuency = 50
-            config_file = "rtde/record_configuration.xml"
+            config_file = os.path.join(dirpath, "rtde/record_configuration.xml")
             ur10_connection = UR10RTDE(host=UR10_ip, frequency=frecuency, config_file=config_file)
             ur10_connection.connect()
 
